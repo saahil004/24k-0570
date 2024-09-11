@@ -1,0 +1,91 @@
+//Q1) int datatype has only 4 bytes memory so as a result of storing a larger number than that, it turns negative due to two's complement form.
+//Q2
+#include <stdio.h>
+
+int main() {
+    int a = 2;
+    int b = 1;
+    int temp;
+    printf("before swapping\n a = %d\n b = %d\n", a, b);
+    temp = a;
+    a = b;
+    b = temp;
+       printf("after swapping\n a = %d\n b = %d\n", a, b);
+}
+
+//Q3
+#include <stdio.h>
+
+int main() {
+    int taxRate, salary;
+    printf("enter tax rate in %: \n");
+    scanf("%d", &taxRate);
+    printf("enter salary: \n");
+    scanf("%d", &salary);
+    float tax = (taxRate * salary)/100;
+    float salaryAfter = salary - tax;
+    printf("your tax is %.2f\n your salary is %.2f", tax, salaryAfter);
+    
+    
+}
+//Q4
+#include <stdio.h>
+
+int main() {
+    int avg;
+    int dist = 1207;
+    int fuelPriceBwd = 123;
+    int fuelPriceFwd = 118;
+    printf("enter your car's fuel average: \n");
+    scanf("%d", &avg);
+    float fuelNeeded = dist/avg;
+    float totalCost = fuelNeeded*fuelPriceBwd + fuelNeeded*fuelPriceFwd;
+    printf("you need %.1f of fuel\nyour cost is %.1f", fuelNeeded*2, totalCost);
+    
+    
+    
+}
+//Q5
+#include <stdio.h>
+
+int main() {
+    long int p;
+    float r;
+    int t;
+     printf("enter principle between 100 and 1000000\n");
+     scanf("%li", &p);
+     while (!(p >= 100 && p <= 1000000)) {
+         printf("enter p again: \n");
+         scanf("%li", &p);
+     }
+     printf("enter rate between 5 and 10 percent: \n");
+     scanf("%f", &r);
+     while (!(r >= 5 && r <= 10)) {
+         printf("enter rate again: \n");
+         scanf("%f", &r);
+     }
+    printf("enter time between 1 and 10 in years: \n");
+    scanf("%d", &t);
+    while (!(t >= 1 && t <= 10)) {
+        printf("enter time again: \n");
+        scanf("%d", &t);
+    }
+    float interest = (p*r*t)/100;
+    printf("your interest is: %f", interest);
+}
+//Q6
+#include <stdio.h>
+
+int main() {
+      int x1, y1, x2, y2;
+      printf("enter x coordinate of the first coordinate: \n");
+      scanf("%d", &x1);
+      printf("enter y coordinate of the first coordinate: \n");
+      scanf("%d", &y1);
+      printf("enter x coordinate of the second coordinate: \n");
+      scanf("%d", &x2);
+      printf("enter the y coordinate of the second coordinate: \n");
+      scanf("%d", &y2);
+      float gradient = (y2-y1)/(x2-x1);
+      printf("the gradient is %.3f", gradient);
+}
