@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int units;
+    float bill = 0.0, sp, up, tup;
+    char Name[10];
+    int ID;
+    printf("Please enter your name: \n");
+    scanf("%s", &Name);
+    printf("Please enter your ID: \n");
+    scanf("%d", &ID);
+    printf("Please enter your units: \n");
+    scanf("%d", &units);
+    if (units >= 0 && units <= 199) {
+        up = 16.2;
+        tup = units * up;
+    } else if (units >= 200 && units <= 299) {
+        up = 20.1;
+        tup = units * up;
+    } else if (units >= 300 && units <= 499) {
+        up = 27.1;
+        tup = units * up;
+    } else if (units >= 500) {
+        up = 35.9;
+        tup = units * up;
+    }
+    bill = tup;
+    if (tup > 18000) {
+        sp = 0.15*tup;
+        bill = tup + sp;
+    }
+    printf("Name: %s\n", Name);
+    printf("ID: %d\n", ID);
+    printf("Your electricity bill is: %.2f\n", bill);
+    printf("Units consumed: %d", units);
+    printf("Your unit price: %.2f\n", up);
+    printf("Your total unit price: %.2f\n", tup);
+    printf("Your surcharge price: %.2f\n", sp);
+    return 0;
+}
