@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include <string.h>
+int main() {
+    int a, b;
+    printf("enter a: ");
+    scanf("%d", &a);
+    printf("enter b: ");
+    scanf("%d", &b);
+    int max = (a > b) ? a : b;
+    printf("max is %d", max);
+    return 0;
+}
