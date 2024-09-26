@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <string.h>
+int main() {
+    int age;
+    char nationality[15];
+    printf("enter: ");
+    scanf("%d", &age);
+    printf("enter nationality\n");
+    scanf("%s", &nationality);
+    if (strcmp(nationality, "pak") == 0 && age >= 18) {
+        printf("You are eligible\n");
+    } else {
+        printf("not eligible");
+    }
+    return 0;
+}
