@@ -1,0 +1,48 @@
+#include <stdio.h>
+int main (){
+    float e1, e2, e3, e4, e5, examscore, a1, a2, a3, a4, a5, assignscore, netscore;
+    int attendance;
+    printf("Please enter your overall attendance percentage:  ");
+    scanf("%d",&attendance);
+    printf("Please enter the marks you scored out of 80 in your programming exam: ");
+    scanf("%f",&e1);
+    printf("Please enter the marks you scored out of 80 in your english exam: ");
+    scanf("%f",&e2);
+    printf("Please enter the marks you scored out of 80 in your calculus exam: ");
+    scanf("%f",&e3);
+    printf("Please enter the marks you scored out of 80 in your physics exam: ");
+    scanf("%f",&e4);
+    printf("Please enter the marks you scored out of 80 in your pakistan studies exam: ");
+    scanf("%f",&e5);
+    printf("Please enter the marks you scored out of 20 in your programming assignment: ");
+    scanf("%f",&a1);
+    printf("Please enter the marks you scored out of 20 in your english assignment: ");
+    scanf("%f",&a2);
+    printf("Please enter the marks you scored out of 20 in your calculus assignment: ");
+    scanf("%f",&a3);
+    printf("Please enter the marks you scored out of 20 in your physics assignment: ");
+    scanf("%f",&a4);
+    printf("Please enter the marks you scored out of 20 in your pakistan studies assignment: ");
+    scanf("%f",&a5);
+    examscore=(e1+e2+e3+e4+e5)/5;
+    assignscore=(a1+a2+a3+a4+a5)/5;
+    netscore=examscore+assignscore;
+    if (attendance>=75 && attendance<=100){
+        if(netscore>=90){
+            printf("Your overall grade for this semester is A+");
+        }else if(netscore>=85){
+            printf("Your overall grade for this semester is A");
+        }else if(netscore>=80){
+            printf("Your overall grade for this semester is B+");
+        }else if(netscore>=75){
+            printf("Your overall grade for this semester is B.");
+        }else if(netscore>=65){
+            printf("Your overall grade for this semester is C.");
+        }else if(netscore>=60){
+            printf("Your overall grade for this semester is C-.");
+        }else if(netscore>=50){
+            printf("Your overall grade for this semester is D.");
+        }else printf("You failed");
+    }else printf("Low attendance.");
+    return 0;
+}
