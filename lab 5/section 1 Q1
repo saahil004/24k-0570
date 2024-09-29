@@ -4,7 +4,7 @@ int main() {
     int age;
     start:
     printf("enter age: ");
-    scanf("%d\n", &age);
+    scanf("%d", &age);
     if (age < 0) {
         goto start;
     }
