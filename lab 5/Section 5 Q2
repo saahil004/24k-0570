@@ -1,9 +1,14 @@
 #include <stdio.h>
 int DigitSum(int num) {
+    st:
     int sum = 0;
     while (num > 0) {
         sum = sum + num % 10;
         num = num / 10;
+    }
+    if (sum > 9) {
+        num = sum;
+        goto st;
     }
     return sum;
 }
