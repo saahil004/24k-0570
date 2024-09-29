@@ -1,12 +1,10 @@
 #include <stdio.h>
 
 int main() {
-    char plainText, cipherText, decipherText;
+    char plainText, cipherText;
     printf("enter character to be encrypted: ");
     scanf(" %c", &plainText);
     cipherText = plainText ^ 22;
-    decipherText = cipherText ^ 22;
     printf("encrypted: %c", cipherText);
-    printf("\ndecrypted: %c", decipherText);
     return 0;
 }
