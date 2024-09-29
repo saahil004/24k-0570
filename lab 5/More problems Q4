@@ -1,0 +1,17 @@
+#include <stdio.h>
+
+int main() {
+    int age, income, points;
+    printf("enter your age: ");
+    scanf("%d", &age);
+    printf("enter your income: ");
+    scanf("%d", &income);
+    printf("enter your points: ");
+    scanf("%d", &points);
+    if (age >= 18 && income >= 20000 & points >= 200) {
+        printf("youre eligible for the loan. ");
+    } else {
+        printf("you're not eligible ");
+    }
+    return 0;
+}
