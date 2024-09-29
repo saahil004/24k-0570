@@ -1,8 +1,12 @@
 #include <stdio.h>
 
 int main() {
-    int a = 2;
-    int b = 4;
+    int a;
+    int b;
+    printf("a=  ");
+    scanf("%d",&a);
+    printf("b=  ");
+    scanf("%d",&b);
     printf("before swapping\na = %d\nb = %d\n", a, b);
     a = a ^ b;
     b = a ^ b;
