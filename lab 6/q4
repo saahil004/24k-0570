@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int main() {
+    int a, b, next = 0;
+    a = 1;
+    b = 2;
+    printf("%d, %d, ", a, b);
+    while (next < 14) {
+        next = a + b;
+        // printf("%d, ", next)
+        a = b;
+        b = next;
+        printf("%d, ", next);
+    }
+    return 0;
+}
