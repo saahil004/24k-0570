@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int num = 2;
+    printf("Enter num: ");
+    scanf("%d", &num);
+    if (num%10 == num) {
+        printf("this is a single digit num.\n");
+    } else {
+        printf("this is a multiple digit num.\n");
+    }
+    int prime = 1;
+    for (int i = 2; i <= num/2; i++) {
+        if (num%i == 0) {
+            prime = 0;
+            break;
+        }
+    }
+    if (prime == 1) {
+        printf("num is prime,");
+    } else {
+        printf("num is composite.");
+    }
+    return 0;
+}
