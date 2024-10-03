@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+int main() {
+    int num = 2;
+    int sum = 0;
+    while (num != 0) {
+        printf("Enter num to be added(press 0 to exit): ");
+        scanf("%d", &num);
+        sum += num;
+    }
+    printf("\nThe sum is %d", sum);
+    return 0;
+}
