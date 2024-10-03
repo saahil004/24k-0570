@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+int main() {
+    int num = 2;
+    printf("Enter num to be added(press 0 to exit): ");
+    scanf("%d", &num);
+    if (num%10 == num) {
+        printf("this is a single digit num.");
+    } else {
+        printf("this is a multiple digit num.");
+    }
+    return 0;
+}
