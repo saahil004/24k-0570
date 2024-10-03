@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+int main() {
+    int a, next = 0;
+    a = 65536;
+    printf("%d, ", a);
+    for (int i = 2; i < 10; i++) {
+        next = a / i;
+        a = next;
+        printf("%d, ", next);
+    }
+    return 0;
+}
