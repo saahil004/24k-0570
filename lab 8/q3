@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+int main() {
+    // two 3x3 matrix
+    int matrix[2][3][3] = {{{3,5,6}, {4,6,7}, {11,2,4}},
+                           {{2,0,22}, {1,4,6}, {11,5,7}} };
+    int sum;
+    for (int i = 0; i < 2; i++) {
+        sum = 0; 
+        for (int j = 0; j < 3; j++) {
+            for (int k = 0; k < 3; k++) {
+                sum = sum + matrix[i][j][k];
+            }
+        }
+        printf("the sum of matrix number %d is %d\n", i+1, sum);
+    }
+    
+    return 0;
+}
