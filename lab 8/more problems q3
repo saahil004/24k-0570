@@ -1,0 +1,27 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+
+int main() {
+    int matrix[3][3] = {{2,0,22}, {3,-3,2}, {5,-3,9}};
+    int sr,lc;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            sr = matrix[i][j];
+            lc = matrix[i][j];
+            for (int k = 0; k < 3; k++) {
+                if (matrix[i][k] < sr) {
+                    sr = matrix[i][k];
+                }
+            }
+            for (int x = 0; x < 3; x++) {
+                if (matrix[x][j] > lc) {
+                    lc = matrix[x][j];
+                } 
+            }
+            if (sr == lc) {
+                printf("%d is a saddle point at position %d%d", matrix[i][j], i, j);
+            }
+        }
+    }
+    return 0;
+}
