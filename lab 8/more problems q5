@@ -1,1 +1,28 @@
 
+int main() {
+    int r;
+    printf("enter number of rows: ");
+    scanf("%d", &r);
+    for (int i = 1; i <= r; i++) {
+        for (int j = 1; j <= r; j++) {
+            if (j <= (r-i)) {
+                printf(" ");
+            } else {
+                printf("* ");
+            }
+        }
+        printf("\n");
+    }
+    for (int i = 1; i < r; i++) {
+        for (int j = 1; j <= r; j++) {
+            if (j <= i) {
+                printf(" ");
+            } else {
+                printf("* ");
+            }
+        }
+        printf(" ");
+        printf("\n");
+    }
+    return 0;
+}
