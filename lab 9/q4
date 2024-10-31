@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+	char list[5][20] = {"apple", "banana", "strawberry", "grape", "peach"};
+	char word[20];
+	printf("Enter the word to be found: ");
+	scanf("%s", word);
+	for (int i = 0; i < 5; i++) {
+	    if (strcmp(list[i], word) == 0) {
+	        printf("Found");
+	        return 0;
+	    }
+	}
+	printf("Not Found");
+	return 0;
+}
