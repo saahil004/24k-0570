@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+
+int calculator(int num1, char op, int num2);
+
+int calculator(int num1, char op, int num2) {
+    switch (op) {
+        case '+':
+            return num1 + num2;
+        case '-':
+            return num1 - num2;
+        case '*':
+            return num1 * num2;
+        case '/':
+            return num1 / num2;
+    }
+}
+
+int main() {
+    int n1, n2;
+    char op;
+    printf("Enter num1: ");
+    scanf("%d", &n1);
+    printf("Enter operator: ");
+    scanf(" %c", &op);
+    printf("Enter num2: ");
+    scanf("%d", &n2);
+    int ans = calculator(n1, op, n2);
+    printf("Answer is %d", ans);
+	return 0;
+}
