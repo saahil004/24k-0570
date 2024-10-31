@@ -1,0 +1,22 @@
+#include <stdio.h>
+int evenOrOdd(int num);
+
+int evenOrOdd(int num) {
+   if (num % 2 == 0) {
+        return 1;
+   } else {
+        return 0; 
+   }
+}
+
+int main() {
+    int val;
+    printf("Enter value to be checked: ");
+    scanf("%d", &val);
+    if (evenOrOdd(val) == 1) {
+         printf("The number is even.");
+    } else {
+         printf("The number is odd.");
+    }   
+    return 0;
+}
