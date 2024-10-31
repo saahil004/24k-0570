@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+
+void swapIntegers(int *a, int *b);
+
+void swapIntegers(int *a, int *b) {
+    *a = *a ^ *b;
+    *b = *a ^ *b;
+    *a = *a ^ *b;
+}
+int main() {
+    int a, b;
+    printf("Enter value of a: ");
+    scanf("%d", &a);
+    printf("Enter value of b: ");
+    scanf("%d", &b);
+    printf("Before swapping\nvalue of a: %d\nvalue of b: %d\n", a, b);
+    swapIntegers(&a, &b);
+    printf("After swapping\nvalue of a: %d\nvalue of b: %d", a, b);
+	return 0;
+}
