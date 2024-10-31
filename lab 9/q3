@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+   char des[20];
+   char src[20];
+   int n;
+   printf("Enter destination string: "); 
+   scanf("%s", des);
+   printf("Enter source string: "); 
+   scanf("%s", src);
+   printf("Enter number of chracaters to be appended: "); 
+   scanf("%d", &n);
+   strncat(des, src, n);
+   printf("Destination string after: %s", des); 
+   return 0;
+}
