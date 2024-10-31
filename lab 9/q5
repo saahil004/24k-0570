@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+int palindrome(char *word);
+int palindrome(char *word) {
+    char word2[20];
+    strcpy(word2, word);
+    strrev(word2);
+    if (strcmp(word, word2) == 0) {
+        return 1;
+    }
+    return 0;
+}
+
+int main() {
+	char list[5][20];
+	for (int i = 0; i < 5; i++) {
+	    printf("Enter word number %d: ", i);
+	    scanf("%s", list[i]);
+	}
+// breakpoint	printf("%d", palindrome("level"));
+    for (int i = 0; i < 5; i++) {
+        if (palindrome(list[i]) == 1) {
+            printf("The word %s is a palindrome.\n", list[i]);
+        } else {
+            printf("The word %s is not a palindrome.\n", list[i]);
+        }
+    }
+	return 0;
+}
