@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+void myStrrev(char *str);
+void myStrrev(char *str) {
+    char temp;
+    int len = strlen(str);
+    static int i = 0;
+    if (len > 0 && i < len/2) {
+        temp = str[i];
+        str[i] = str[len-1-i];
+        str[len-i-1] = temp;
+        i++;
+        myStrrev(str);
+    } else {
+        return;
+    }
+    
+}
+
+int main() {
+    char ms[100];
+    printf("Enter string: ");
+    scanf("%s", ms);
+    printf("Before: %s\n", ms);
+    myStrrev(ms);
+    printf("After: %s", ms);
+    return 0;
+}
