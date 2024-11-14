@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+struct movie {
+   char title[20];
+   char genre[20];
+   char director[20]; 
+   int releaseYear;
+   int rating;
+};
+
+int main() {
+   int n;
+   printf("How many max movies?\nAnswer: ");
+   scanf("%d", &n);
+   struct movie movies[n];
+   int free = 0;
+   int choice = 0;
+   while (choice != 3) {
+       printf("Enter 1 to add a movie.\nEnter 2 to search a movie by genre\nEnter 3 to exit.\nChoice: ");
+       scanf("%d", &choice);
+       switch (choice) {
+           case 1:
+              if (free < n) {
+                  char title[20]="";
+                  char genre[20]="";
+                  char director[20]=""; 
+                  int year;
+                  int rating;
+                  printf("Enter title of movie: ");
+                  
+                  //fgets(title, 20, stdin);
+                  //title[strcspn(title, "\n")] = '\0';
+                  
+                  printf("Enter genre of movie: ");
+                  //fgets(genre, 20, stdin);
+                  //genre[strcspn(genre, "\n")] = '\0';
+                  
+                  printf("Enter director of movie: ");
+                  //fgets(director, 20, stdin);
+                  //director[strcspn(director, "\n")] = '\0';
+                  
+                  printf("Enter year of movie: ");
+                  
+                  scanf("%d", &year);
+                  printf("Enter rating of movie: ");
+                  scanf("%d", &rating);
+                  strcpy(movies[free].title, title);
+                  strcpy(movies[free].genre, genre);
+                  strcpy(movies[free].director, director);
+                  movies[free].releaseYear = year;
+                  movies[free].rating = rating;
+                  free++;
+              }
+              break;
+       }
+   }
+   for (int i = 0; i <= free; i++) {
+       printf("%s\n", movies[i].title);
+   }
+   return 0;
+   
+}
