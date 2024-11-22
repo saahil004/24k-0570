@@ -40,7 +40,6 @@ void newItem()
     scanf("%d", &price);
     FILE *fi = fopen("items.txt", "r");
     fscanf(fi, "%d", &noOfItems);
-    fclose(fi);
     FILE *fip = freopen("items.txt", "r+", fi);
     fprintf(fip, "%d\n", noOfItems + 1);
     fclose(fip);
@@ -50,6 +49,7 @@ void newItem()
     fprintf(fp, "%d\n", qty);
     fprintf(fp, "%d\n", price);
     printf("Added.\n");
+    fclose(fi);
 }
 
 void addEmployee()
