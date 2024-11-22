@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <unistd.h>
@@ -8,7 +8,6 @@ struct admin
 {
     char user[20];
     char pass[20];
-    
 };
 
 struct item
@@ -19,13 +18,14 @@ struct item
     int price;
 };
 
-
 int login();
 void newItem();
 void newEmployee();
-void newAdmin();
+void deleteItem();
+void deleteEmployee();
 
-void newItem() {
+void newItem()
+{
     struct item newItem;
     int noOfItems;
     char name[20], type[20];
@@ -51,9 +51,49 @@ void newItem() {
     fprintf(fp, "%d\n", price);
 }
 
+void addEmployee()
+{
+    int noOfEmployees;
+    char newuser[20], newpass[20], cp[20];
+    FILE *fp = fopen("employees.txt", "r");
+    fscanf(fp, "%d", &noOfEmployees);
+    fclose(fp);
+    FILE *fbp = freopen("employees.txt", "r+", fp);
+    fprintf(fp, "%d\n", noOfEmployees + 1);
+    fclose(fbp);
+    FILE *fcp = freopen("employees.txt", "a", fp);
+    printf("Enter new user: ");
+    scanf("%19s", newuser);
+    printf("Enter password: ");
+    scanf("%19s", newpass);
+    printf("Confirm password: ");
+    scanf("%19s", cp);
+    while (strcmp(newpass, cp) != 0)
+    {
+        printf("Passwords dont match.\n ");
+        printf("Enter password: ");
+        scanf("%19s", newpass);
+        printf("Confirm password: ");
+        scanf("%19s", cp);
+    }
+
+    for (int j = 0; j < strlen(newuser); j++)
+        {
+            newuser[j] = newuser[j] ^ 22;
+        }
+    for (int j = 0; j < strlen(newpass); j++)
+        {
+            newpass[j] = newpass[j] ^ 22;
+        }
+    fprintf(fp, "%s\n", newuser);
+    fprintf(fp, "%s\n", newpass);
+    fclose(fcp);
+    printf("Added.\n");
+}
 
 
-int login() {
+int login()
+{
     FILE *fad = fopen("admin.txt", "r");
     int noOfAdmins;
     fscanf(fad, "%d", &noOfAdmins);
@@ -89,18 +129,16 @@ int login() {
         {
             return 1;
         }
-        
     }
     // printf("Incorrect user or pass.\n");
     printf("Incorrect user or password.\n");
     sleep(2);
     system("cls");
     return 0;
-    
-    
 }
 
-int main() {
+int main()
+{
     int f = 0;
     while (f == 0)
     {
@@ -117,18 +155,21 @@ int main() {
         {
         case 1:
             newItem();
+            sleep(2);
+            system("cls");
             break;
         case 2:
-            /* code */
+            addEmployee();
+            sleep(2);
+            system("cls");
             break;
         case 3:
             /* code */
-            break;    
+            break;
         default:
             break;
         }
     }
-    
 
     return 0;
 }
