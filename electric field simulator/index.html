@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Field Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        #electricFieldCanvas {
+            border: 2px solid #000;
+            margin-top: 20px;
+            cursor: crosshair;
+        }
+
+        #controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            display: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Electric Field Simulator</h1>
+    <div id="controls">
+        <label for="chargeType">Charge Type:</label>
+        <select id="chargeType">
+            <option value="positive">Positive</option>
+            <option value="negative">Negative</option>
+        </select>
+        <br>
+        <label for="chargeSize">Charge Size:</label>
+        <input type="range" id="chargeSize" min="1" max="100" value="10">
+        <span id="chargeSizeLabel">10</span> C
+        <br>
+        <button id="addTestCharge">Add Test Charge</button>
+    </div>
+    <canvas id="electricFieldCanvas"></canvas>
+    <div id="tooltip"></div>
+
+    <script>
+        const canvas = document.getElementById('electricFieldCanvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+
+        // Set canvas size
+        canvas.width = 800;
+        canvas.height = 600;
+
+        // Constants
+        const k = 8.99e9; // Coulomb's constant (in Nm²/C²)
+        const chargeRadius = 10; // Radius of charge marker
+        const maxFieldMagnitude = 1e5; // Minimum magnitude for field vector visualization
+
+        // List of charges (x, y, charge)
+        let charges = [];
+        let testCharge = null; // Test charge data
+        let isAddingTestCharge = false; // Flag to control test charge addition
+
+        // Update the charge size label when the slider is changed
+        const chargeSizeInput = document.getElementById('chargeSize');
+        const chargeSizeLabel = document.getElementById('chargeSizeLabel');
+        chargeSizeInput.addEventListener('input', () => {
+            chargeSizeLabel.textContent = chargeSizeInput.value;
+        });
+
+        // Toggle test charge mode
+        const addTestChargeButton = document.getElementById('addTestCharge');
+        addTestChargeButton.addEventListener('click', () => {
+            isAddingTestCharge = !isAddingTestCharge;
+            addTestChargeButton.textContent = isAddingTestCharge ? 'Cancel Test Charge' : 'Add Test Charge';
+        });
+
+        // Handle mouse click to add charge (either normal charge or test charge)
+        canvas.addEventListener('click', (event) => {
+            if (isAddingTestCharge) {
+                // Add test charge
+                const testChargeSize = 1e-9; // Fixed test charge value in Coulombs
+                testCharge = {
+                    x: event.offsetX,
+                    y: event.offsetY,
+                    q: testChargeSize
+                };
+            } else {
+                // Add normal charges (positive or negative)
+                const chargeType = document.getElementById('chargeType').value;
+                const chargeMagnitude = parseFloat(chargeSizeInput.value);
+
+                charges.push({
+                    x: event.offsetX,
+                    y: event.offsetY,
+                    q: chargeType === 'positive' ? chargeMagnitude : -chargeMagnitude
+                });
+            }
+
+            drawFieldLines(); // Re-render the charges and field lines
+        });
+
+        // Function to calculate the electric field at a point (Ex, Ey)
+        function calculateElectricField(x, y) {
+            let Ex = 0;
+            let Ey = 0;
+
+            charges.forEach(charge => {
+                const dx = x - charge.x;
+                const dy = y - charge.y;
+                const r = Math.sqrt(dx * dx + dy * dy);
+                if (r === 0) return; // Skip division by zero
+                const r3 = r * r * r; // r^3
+                const E = k * charge.q / r3; // Electric field magnitude
+
+                Ex += E * dx; // X component
+                Ey += E * dy; // Y component
+            });
+
+            return { Ex, Ey };
+        }
+
+        // Function to calculate force on the test charge at (x, y)
+        function calculateForce(x, y, testCharge) {
+            const field = calculateElectricField(x, y);
+            const magnitude = Math.sqrt(field.Ex * field.Ex + field.Ey * field.Ey);
+            return testCharge.q * magnitude; // F = q * E
+        }
+
+        // Function to calculate the distance between two points
+        function calculateDistance(x1, y1, x2, y2) {
+            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        }
+
+        // Function to draw electric field lines and vectors
+        function drawFieldLines() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw normal charges
+            charges.forEach(charge => {
+                ctx.beginPath();
+                ctx.arc(charge.x, charge.y, chargeRadius, 0, Math.PI * 2);
+                ctx.fillStyle = charge.q > 0 ? 'red' : 'blue';
+                ctx.fill();
+            });
+
+            // Draw test charge
+            if (testCharge) {
+                ctx.beginPath();
+                ctx.arc(testCharge.x, testCharge.y, 5, 0, Math.PI * 2); // Small circle for test charge
+                ctx.fillStyle = 'green';
+                ctx.fill();
+            }
+
+            // Draw field lines and vectors from charges
+            for (let x = 0; x < canvas.width; x += 20) {
+                for (let y = 0; y < canvas.height; y += 20) {
+                    const field = calculateElectricField(x, y);
+
+                    // Calculate the magnitude of the field
+                    const magnitude = Math.sqrt(field.Ex * field.Ex + field.Ey * field.Ey);
+                    if (magnitude > maxFieldMagnitude) { // Only draw significant vectors
+                        const normEx = field.Ex / magnitude;
+                        const normEy = field.Ey / magnitude;
+
+                        // Draw field vectors (arrows)
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x + normEx * 10, y + normEy * 10); // Short vector
+                        ctx.strokeStyle = 'black';
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Function to update the tooltip with field and force data
+        function showTooltip(event) {
+            const mouseX = event.offsetX;
+            const mouseY = event.offsetY;
+            const testChargeValue = 1e-9; // Test charge value in Coulombs
+
+            if (testCharge && Math.sqrt((mouseX - testCharge.x) ** 2 + (mouseY - testCharge.y) ** 2) < 10) {
+                // If mouse is near the test charge, calculate force and distance
+                const force = calculateForce(mouseX, mouseY, testCharge);
+                let distanceDetails = '';
+                let chargeDetails = '';
+
+                // Display distance and charges between test charge and each charge on the canvas
+                charges.forEach(charge => {
+                    const distance = calculateDistance(mouseX, mouseY, charge.x, charge.y);
+                    distanceDetails += `<br>Distance to Charge at (${charge.x}, ${charge.y}): ${distance.toFixed(2)} m<br>Charge: ${charge.q.toExponential(2)} C`;
+                });
+
+                // Display the tooltip
+                tooltip.style.left = `${event.pageX + 10}px`;
+                tooltip.style.top = `${event.pageY + 10}px`;
+                tooltip.style.display = 'block';
+
+                tooltip.innerHTML = `
+                    <strong>Force on Test Charge:</strong> ${force.toFixed(2)} N
+                    <br><strong>Distance to Test Charge:</strong> 0 m (test charge itself)
+                    ${distanceDetails}
+                    <br><strong>Test Charge:</strong> ${testCharge.q.toExponential(2)} C
+                `;
+            } else {
+                tooltip.style.display = 'none'; // Hide tooltip when not hovering over test charge
+            }
+        }
+
+        // Hide the tooltip when the mouse leaves the canvas
+        canvas.addEventListener('mousemove', showTooltip);
+        canvas.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
+        });
+
+        // Function to draw the grid for visual clarity
+        function drawGrid() {
+            ctx.strokeStyle = "#ddd";
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+        }
+
+        // Update the simulation every frame
+        function animate() {
+            drawGrid();
+            drawFieldLines();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
