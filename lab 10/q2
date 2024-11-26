@@ -10,6 +10,10 @@ void myStrrev(char *str) {
         str[i] = str[len-1-i];
         str[len-i-1] = temp;
         i++;
+        if (i == len/2) {
+            i = 0;
+            return;
+        }
         myStrrev(str);
     } else {
         return;
@@ -24,5 +28,11 @@ int main() {
     printf("Before: %s\n", ms);
     myStrrev(ms);
     printf("After: %s", ms);
+    char ns[100];
+    printf("Enter string: ");
+    scanf("%s", ns);
+    printf("Before: %s\n", ns);
+    myStrrev(ns);
+    printf("After: %s", ns);
     return 0;
 }
