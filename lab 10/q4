@@ -21,7 +21,7 @@ int main() {
    char sg[20];
    struct movie *movies = (struct movie *)malloc(sizeof(struct movie));
    while (choice != 3) {
-       printf("Enter 1 to add new movies.\nEnter 2 to search movies.\nChoice: ");
+       printf("Enter 1 to add new movies.\nEnter 2 to search movies.\nEnter 3 to exit.\nChoice: ");
        scanf("%d", &choice);
        getchar();
        switch (choice) {
