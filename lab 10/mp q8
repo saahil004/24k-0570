@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int linearSearch(int *arr, int size, int te, int ci) {
+    if (arr[ci] == te) {
+        return ci;
+    } else if (ci < size) {
+        return linearSearch(arr, size, te, ci + 1);
+    } else {
+        return -1;
+    }
+}
+
+int main() {
+    int arr[] = {2,3,5,6,44,62,79};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    printf("Enter value to be found: ");
+    int te;
+    scanf("%d", &te);
+    if (linearSearch(arr, size, te, 0) == -1) {
+        printf("Not Found.\n");
+    } else {
+        printf("Found at %d.\n", linearSearch(arr, size, te, 0));
+    }
+    return 0;
+}
