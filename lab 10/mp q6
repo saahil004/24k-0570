@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <string.h>
+
+struct TravelPackage {
+    char packageName[50];
+    char destination[50];
+    int duration;
+    float cost;
+    int seatsAvailable;
+};
+
+void displayPackages(struct TravelPackage packages[], int numPackages) {
+    printf("\nAvailable Travel Packages:\n");
+    for (int i = 0; i < numPackages; i++) {
+        printf("%d. %s - Destination: %s, Duration: %d days, Cost: $%.2f, Seats Available: %d\n",
+                i + 1, packages[i].packageName, packages[i].destination, 
+                packages[i].duration, packages[i].cost, packages[i].seatsAvailable);
+    }
+}
+
+void bookPackage(struct TravelPackage packages[], int numPackages) {
+    int packageChoice;
+    displayPackages(packages, numPackages);
+    printf("\nEnter the number of the package you want to book (0 to cancel): ");
+    scanf("%d", &packageChoice);
+    if (packageChoice == 0) {
+        printf("Booking cancelled.\n");
+        return;
+    }
+    if (packageChoice < 1 || packageChoice > numPackages) {
+        printf("Invalid package choice.\n");
+        return;
+    }
+    if (packages[packageChoice - 1].seatsAvailable > 0) {
+        packages[packageChoice - 1].seatsAvailable--;
+        printf("You have successfully booked the package: %s\n", packages[packageChoice - 1].packageName);
+        printf("Seats remaining: %d\n", packages[packageChoice - 1].seatsAvailable);
+    } else {
+        printf("Sorry, no seats are available for the selected package.\n");
+    }
+}
+
+int main() {
+    struct TravelPackage packages[] = {
+        {"Tropical Getaway", "Hawaii", 7, 1500.00, 10},
+        {"European Tour", "Paris", 14, 3500.00, 5},
+        {"Beach Vacation", "Maldives", 5, 2500.00, 3},
+        {"Safari Adventure", "Kenya", 10, 4000.00, 8}
+    };
+    
+    int numPackages = sizeof(packages) / sizeof(packages[0]);
+    int choice;
+    
+    while (1) {
+        printf("\nTravel Package Booking System\n");
+        printf("1. Display Available Packages\n");
+        printf("2. Book a Package\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch (choice) {
+            case 1:
+                displayPackages(packages, numPackages);
+                break;
+            case 2:
+                bookPackage(packages, numPackages);
+                break;
+            case 3:
+                printf("Thank you for using the Travel Package Booking System.\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
