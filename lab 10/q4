@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
 struct movie {
    char title[20];
    char genre[20];
@@ -9,54 +11,87 @@ struct movie {
 };
 
 int main() {
-   int n;
-   printf("How many max movies?\nAnswer: ");
-   scanf("%d", &n);
-   struct movie movies[n];
-   int free = 0;
    int choice = 0;
+   int nm = 0;
+   char title[20];
+   char genre[20];
+   char director[20]; 
+   int releaseYear;
+   int rating;
+   char sg[20];
+   struct movie *movies = (struct movie *)malloc(sizeof(struct movie));
    while (choice != 3) {
-       printf("Enter 1 to add a movie.\nEnter 2 to search a movie by genre\nEnter 3 to exit.\nChoice: ");
+       printf("Enter 1 to add new movies.\nEnter 2 to search movies.\nChoice: ");
        scanf("%d", &choice);
+       getchar();
        switch (choice) {
-           case 1:
-              if (free < n) {
-                  char title[20]="";
-                  char genre[20]="";
-                  char director[20]=""; 
-                  int year;
-                  int rating;
-                  printf("Enter title of movie: ");
-                  
-                  //fgets(title, 20, stdin);
-                  //title[strcspn(title, "\n")] = '\0';
-                  
-                  printf("Enter genre of movie: ");
-                  //fgets(genre, 20, stdin);
-                  //genre[strcspn(genre, "\n")] = '\0';
-                  
-                  printf("Enter director of movie: ");
-                  //fgets(director, 20, stdin);
-                  //director[strcspn(director, "\n")] = '\0';
-                  
-                  printf("Enter year of movie: ");
-                  
-                  scanf("%d", &year);
-                  printf("Enter rating of movie: ");
-                  scanf("%d", &rating);
-                  strcpy(movies[free].title, title);
-                  strcpy(movies[free].genre, genre);
-                  strcpy(movies[free].director, director);
-                  movies[free].releaseYear = year;
-                  movies[free].rating = rating;
-                  free++;
-              }
-              break;
-       }
+       case 1:
+          if (nm == 0) {
+              printf("Enter title: ");
+              scanf("%[^\n]", title);
+              getchar();
+              printf("Enter genre: ");
+              scanf("%[^\n]", genre);
+              getchar();
+              printf("Enter director: ");
+              scanf("%[^\n]", director);
+              getchar();
+              printf("Enter release year: ");
+              scanf("%d", &releaseYear);
+              printf("Enter rating: ");
+              scanf("%d", &rating);
+            //   printf("%s %s %s %d %d", title, genre, director, releaseYear, rating);
+              strcpy(movies[nm].title, title);
+              strcpy(movies[nm].genre, genre);
+              strcpy(movies[nm].director, director);
+              movies[nm].releaseYear = releaseYear;
+              movies[nm].rating = rating;
+              nm++;
+          } else {
+              movies = realloc(movies, (nm + 1)*sizeof(struct movie));
+              printf("Enter title: ");
+              scanf("%[^\n]", title);
+              getchar();
+              printf("Enter genre: ");
+              scanf("%[^\n]", genre);
+              getchar();
+              printf("Enter director: ");
+              scanf("%[^\n]", director);
+              getchar();
+              printf("Enter release year: ");
+              scanf("%d", &releaseYear);
+              printf("Enter rating: ");
+              scanf("%d", &rating);
+            //   printf("%s %s %s %d %d", title, genre, director, releaseYear, rating);
+              strcpy(movies[nm].title, title);
+              strcpy(movies[nm].genre, genre);
+              strcpy(movies[nm].director, director);
+              movies[nm].releaseYear = releaseYear;
+              movies[nm].rating = rating;
+              nm++;
+          }
+          break;
+       case 2:
+          printf("Enter genre to search: ");
+          fgets(sg, sizeof(sg), stdin);
+          sg[strcspn(sg, "\n")] = '\0';
+          printf("Results: \n");
+          for (int i = 0; i < nm; i++)
+          {
+            if (strcmp(sg, movies[i].genre) == 0) {
+               printf("title: %s\ngenre: %s\ndirector: %s\nrelease year: %d\nrating: %d\n\n", movies[i].title, movies[i].genre, movies[i].director, movies[i].releaseYear, movies[i].rating);
+            }
+          }
+          
+          break;
+          
    }
-   for (int i = 0; i <= free; i++) {
-       printf("%s\n", movies[i].title);
    }
+   // for (int i = 0; i < nm; i++)
+   // {
+   //    printf("%s %s %s %d %d\n", movies[i].title, movies[i].genre, movies[i].director, movies[i].releaseYear, movies[i].rating);
+   // }
+     
    return 0;
    
 }
