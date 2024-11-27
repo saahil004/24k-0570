@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+#define METERS_TO_KILOMETERS 0.001
+
+void convertMetersToKilometers(double meters) {
+    static int count = 0;
+    count++;
+    double kilometers = meters * METERS_TO_KILOMETERS;
+    printf("Conversion #%d: %.2f meters = %.2f kilometers\n", count, meters, kilometers);
+}
+
+int main() {
+    double meters;
+    while (1) {
+        printf("Enter meters (or a negative number to exit): ");
+        scanf("%lf", &meters);
+        
+        if (meters < 0) {
+            break;
+        }
+        
+        convertMetersToKilometers(meters);
+    }
+    
+    return 0;
+}
