@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Car {
+    char make[50];
+    char model[50];
+    int year;
+    float price;
+    float mileage;
+};
+
+void addCar(struct Car cars[], int *numCars) {
+    printf("Enter make: ");
+    scanf("%s", cars[*numCars].make);
+    printf("Enter model: ");
+    scanf("%s", cars[*numCars].model);
+    printf("Enter year: ");
+    scanf("%d", &cars[*numCars].year);
+    printf("Enter price: ");
+    scanf("%f", &cars[*numCars].price);
+    printf("Enter mileage: ");
+    scanf("%f", &cars[*numCars].mileage);
+    (*numCars)++;
+}
+
+void displayCars(struct Car cars[], int numCars) {
+    if (numCars == 0) {
+        printf("No cars available.\n");
+        return;
+    }
+    for (int i = 0; i < numCars; i++) {
+        printf("Make: %s, Model: %s, Year: %d, Price: $%.2f, Mileage: %.2f miles\n",
+               cars[i].make, cars[i].model, cars[i].year, cars[i].price, cars[i].mileage);
+    }
+}
+
+void searchCar(struct Car cars[], int numCars) {
+    char searchTerm[50];
+    int found = 0;
+    printf("Enter make or model to search: ");
+    scanf("%s", searchTerm);
+    for (int i = 0; i < numCars; i++) {
+        if (strstr(cars[i].make, searchTerm) != NULL || strstr(cars[i].model, searchTerm) != NULL) {
+            printf("Make: %s, Model: %s, Year: %d, Price: $%.2f, Mileage: %.2f miles\n",
+                   cars[i].make, cars[i].model, cars[i].year, cars[i].price, cars[i].mileage);
+            found = 1;
+        }
+    }
+    if (!found) {
+        printf("No cars found matching the search term.\n");
+    }
+}
+
+int main() {
+    struct Car cars[100];
+    int numCars = 0;
+    int choice;
+    
+    while (1) {
+        printf("\n1. Add New Car\n2. Display Available Cars\n3. Search Car by Make or Model\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch (choice) {
+            case 1:
+                addCar(cars, &numCars);
+                break;
+            case 2:
+                displayCars(cars, numCars);
+                break;
+            case 3:
+                searchCar(cars, numCars);
+                break;
+            case 4:
+                printf("Exiting...\n");
+                return 0;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+    
+    return 0;
+}
