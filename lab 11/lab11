@@ -1,0 +1,160 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+void addBatsman();
+// void addBowler();
+// void display();
+// void removeBatsman();
+// void removeBowler();
+
+struct player
+{
+    char name[20];
+    char team[20];
+};
+
+struct bowl
+{
+    char type[10]; // seemer, pacer, spinner// N/A
+    char arm[5];   // left or right
+    struct player ply;
+};
+
+struct bat
+{
+    char type[10];  // top order, middle order, lower order
+    char handed[8]; // lefty or righty
+    struct player ply2;
+};
+
+void addBatsman()
+{
+    FILE *fp = fopen("bat.txt", "r");
+    int size;
+    // char name[20], team[20], type[10], handed[8];
+    fscanf(fp, "%d", &size);
+    struct bat *batsmen = (struct bat *)malloc(size * sizeof(struct bat));
+    for (int i = 0; i < size; i++)
+    {
+        fscanf(fp, "%s", batsmen[i].ply2.name);
+        fscanf(fp, "%s", batsmen[i].ply2.team);
+        fscanf(fp, "%s", batsmen[i].type);
+        fscanf(fp, "%s", batsmen[i].handed);
+    }
+    fclose(fp);
+    char n[20], te[20], ty[10] = "", h[8] = "";
+    printf("Enter the name of the batsman to be added: ");
+    // scanf("%[^\n]", name);
+    fgets(n, sizeof(n), stdin);
+    n[strcspn(n, "\n")] = '\0';
+    // getchar();
+    printf("Enter the name of the team of the batsman: ");
+    // scanf("%[^\n]", team);
+    fgets(te, sizeof(te), stdin);
+    te[strcspn(te, "\n")] = '\0';
+    while (strcmp(ty, "mo") != 0 && strcmp(ty, "to") != 0 && strcmp(ty, "lo") != 0)
+    {
+        printf("Enter the type of the batsman to be added(to, mo, or lo): ");
+        // scanf("%[^\n]", type);
+        fgets(ty, sizeof(ty), stdin);
+        ty[strcspn(ty, "\n")] = '\0';
+    }
+    while (strcmp(h, "righty") != 0 && strcmp(h, "lefty") != 0)
+    {
+        printf("Enter handed(lefty or righty): ");
+        // scanf("%[^\n]", handed);
+        fgets(h, sizeof(h), stdin);
+        h[strcspn(h, "\n")] = '\0';
+    }
+    // printf("%s %s %s %s", n, te, ty, h);
+    FILE *fup = fopen("bat.txt", "r+");
+    fprintf(fup, "%d\n", size + 1);
+    fclose(fup);
+    FILE *fa = fopen("bat.txt", "a");
+    fprintf(fa, "%s\n", n);
+    fprintf(fa, "%s\n", te);
+    fprintf(fa, "%s\n", ty);
+    fprintf(fa, "%s\n", h);
+    fclose(fa);
+}
+
+void addBowler() {
+    FILE *fp = fopen("bowl.txt", "r");
+    int size;
+    // char name[20], team[20], type[10], handed[8];
+    fscanf(fp, "%d", &size);
+    struct bowl *bowlers = (struct bowl *)malloc(size * sizeof(struct bowl));
+    for (int i = 0; i < size; i++)
+    {
+        fscanf(fp, "%s", bowlers[i].ply.name);
+        fscanf(fp, "%s", bowlers[i].ply.team);
+        fscanf(fp, "%s", bowlers[i].type);
+        fscanf(fp, "%s", bowlers[i].arm);
+    }
+    fclose(fp);
+    char n[20], te[20], ty[10] = "", h[5] = "";
+    printf("Enter the name of the bowler to be added: ");
+    // scanf("%[^\n]", name);
+    fgets(n, sizeof(n), stdin);
+    n[strcspn(n, "\n")] = '\0';
+    // getchar();
+    printf("Enter the name of the team of the bowler: ");
+    // scanf("%[^\n]", team);
+    fgets(te, sizeof(te), stdin);
+    te[strcspn(te, "\n")] = '\0';
+    while (strcmp(ty, "spinner") != 0 && strcmp(ty, "pacer") != 0 && strcmp(ty, "seemer") != 0)
+    {
+        printf("Enter the type of the bowler to be added(spinner, pacer, or seemer): ");
+        // scanf("%[^\n]", type);
+        fgets(ty, sizeof(ty), stdin);
+        ty[strcspn(ty, "\n")] = '\0';
+    }
+    while (strcmp(h, "right") != 0 && strcmp(h, "left") != 0)
+    {
+        printf("Enter handed(left or right): ");
+        // scanf("%[^\n]", handed);
+        fgets(h, sizeof(h), stdin);
+        h[strcspn(h, "\n")] = '\0';
+    }
+    // printf("%s %s %s %s", n, te, ty, h);
+    FILE *fup = fopen("bowl.txt", "r+");
+    fprintf(fup, "%d\n", size + 1);
+    fclose(fup);
+    FILE *fa = fopen("bowl.txt", "a");
+    fprintf(fa, "%s\n", n);
+    fprintf(fa, "%s\n", te);
+    fprintf(fa, "%s\n", ty);
+    fprintf(fa, "%s\n", h);
+    fclose(fa);
+}
+
+int main()
+{
+    int choice = 0;
+    while (choice != 5)
+    {
+        printf("Enter 1 to add a batsman.\nEnter 2 to add a bowler.\nEnter 3 to read all players.\nEnter 4 to delete a batsman.\nEnter 5 to delete a bowler.\nEnter 6 to exit.\nChoice: ");
+        scanf("%d", &choice);
+        getchar();
+        switch (choice)
+        {
+        case 1:
+            addBatsman();
+            break;
+            case 2:
+                addBowler();
+                break;
+            // case 3:
+            //     display();
+            //     break;
+            // case 4:
+            //     removeBatsman();
+            //     break;
+            // case 5:
+            //     removeBowler();
+            //     break;
+        }
+    }
+    return 0;
+}
