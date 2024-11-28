@@ -129,6 +129,47 @@ void addBowler() {
     fclose(fa);
 }
 
+void display() {
+    FILE *fp = fopen("bat.txt", "r");
+    int size;
+    char n[20], t[20], ty[10], h[8];
+    fscanf(fp, "%d", &size);
+    fgetc(fp);
+    printf("BATSMEN:\n");
+    for (int i = 0; i < size; i++)
+    {
+        fgets(n, sizeof(n), fp);
+        n[strcspn(n, "\n")] = '\0';
+        fgets(t, sizeof(t), fp);
+        t[strcspn(t, "\n")] = '\0';
+        fgets(ty, sizeof(ty), fp);
+        ty[strcspn(ty, "\n")] = '\0';
+        fgets(h, sizeof(h), fp);
+        h[strcspn(h, "\n")] = '\0';
+        printf("%d: Name: %s, Team: %s, Type: %s, Handed: %s\n",i+1, n, t, ty, h);
+    }
+    fclose(fp);
+    FILE *fop = fopen("bowl.txt", "r");
+    // int size;
+    // char n[20], t[20], ty[10], h[5];
+    fscanf(fop, "%d", &size);
+    fgetc(fop);
+    printf("BOWLERS:\n");
+    for (int i = 0; i < size; i++)
+    {
+        fgets(n, sizeof(n), fop);
+        n[strcspn(n, "\n")] = '\0';
+        fgets(t, sizeof(t), fop);
+        t[strcspn(t, "\n")] = '\0';
+        fgets(ty, sizeof(ty), fop);
+        ty[strcspn(ty, "\n")] = '\0';
+        fgets(h, sizeof(h), fop);
+        h[strcspn(h, "\n")] = '\0';
+        printf("%d: Name: %s, Team: %s, Type: %s, Arm: %s\n",i+1, n, t, ty, h);
+    }
+    fclose(fop);
+}
+
 int main()
 {
     int choice = 0;
@@ -145,9 +186,9 @@ int main()
             case 2:
                 addBowler();
                 break;
-            // case 3:
-            //     display();
-            //     break;
+            case 3:
+                display();
+                break;
             // case 4:
             //     removeBatsman();
             //     break;
